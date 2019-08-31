@@ -9,12 +9,12 @@ css-select turns CSS selectors into functions that tests if elements match them.
 In its default configuration, css-select queries the DOM structure of the [`domhandler`](https://github.com/fb55/domhandler) module (also known as htmlparser2 DOM).
 It uses [`domutils`](https://github.com/fb55/domutils) as its default adapter over the DOM structure. See Options below for details on querying alternative DOM structures.
 
-__Features:__
+**Features:**
 
-- Full implementation of CSS3 selectors
-- Partial implementation of jQuery/Sizzle extensions
-- Very high test coverage
-- Pretty good performance
+-   Full implementation of CSS3 selectors
+-   Partial implementation of jQuery/Sizzle extensions
+-   Very high test coverage
+-   Pretty good performance
 
 ## Why?
 
@@ -38,10 +38,10 @@ Anyway, after parsing, we end up with an array like this one:
 
 ```js
 [
-  { type: 'tag', name: 'a' },
-  { type: 'descendant' },
-  { type: 'tag', name: 'b' }
-]
+    { type: "tag", name: "a" },
+    { type: "descendant" },
+    { type: "tag", name: "b" }
+];
 ```
 
 Actually, this array is wrapped in another array, but that's another story (involving commas in selectors).
@@ -60,17 +60,17 @@ _//TODO: More in-depth description. Implementation details. Build a spaceship._
 const CSSselect = require("css-select");
 ```
 
-__Note:__ css-select throws errors when invalid selectors are passed to it, contrary to the behavior in browsers, which swallow them. This is done to aid with writing css selectors, but can be unexpected when processing arbitrary strings.
+**Note:** css-select throws errors when invalid selectors are passed to it, contrary to the behavior in browsers, which swallow them. This is done to aid with writing css selectors, but can be unexpected when processing arbitrary strings.
 
-#### `CSSselect(query, elems, options)`
+#### `CSSselect.selectAll(query, elems, options)`
 
 Queries `elems`, returns an array containing all matches.
 
-- `query` can be either a CSS selector or a function.
-- `elems` can be either an array of elements, or a single element. If it is an element, its children will be queried.
-- `options` is described below.
+-   `query` can be either a CSS selector or a function.
+-   `elems` can be either an array of elements, or a single element. If it is an element, its children will be queried.
+-   `options` is described below.
 
-Aliases: `CSSselect.selectAll(query, elems)`, `CSSselect.iterate(query, elems)`.
+Aliases: `default` export, `CSSselect.iterate(query, elems)`.
 
 #### `CSSselect.compile(query)`
 
@@ -82,14 +82,15 @@ Tests whether or not an element is matched by `query`. `query` can be either a C
 
 #### `CSSselect.selectOne(query, elems, options)`
 
-Arguments are the same as for `CSSselect(query, elems)`. Only returns the first match, or `null` if there was no match.
+Arguments are the same as for `CSSselect.selectAll(query, elems)`.
+Only returns the first match, or `null` if there was no match.
 
 ### Options
 
-- `xmlMode`: When enabled, tag names will be case-sensitive. Default: `false`.
-- `strict`: Limits the module to only use CSS3 selectors. Default: `false`.
-- `rootFunc`: The last function in the stack, will be called with the last element that's looked at. Should return `true`.
-- `adapter`: The adapter to use when interacting with the backing DOM structure. By default it uses [`domutils`](https://github.com/fb55/domutils).
+-   `xmlMode`: When enabled, tag names will be case-sensitive. Default: `false`.
+-   `strict`: Limits the module to only use CSS3 selectors. Default: `false`.
+-   `rootFunc`: The last function in the stack, will be called with the last element that's looked at. Should return `true`.
+-   `adapter`: The adapter to use when interacting with the backing DOM structure. By default it uses [`domutils`](https://github.com/fb55/domutils).
 
 #### Custom Adapters
 
@@ -103,10 +104,8 @@ getSiblings, getText, hasAttrib, removeSubsets, findAll, findOne
 The method signature notation used below should be fairly intuitive - if not,
 see the [`rtype`](https://github.com/ericelliott/rtype) or
 [`TypeScript`](https://www.typescriptlang.org/) docs, as it is very similar to
-both of those. You may also want to look at
--[`domutils`](https://github.com/fb55/domutils) to see the default 
--implementation, or at 
--[`css-select-browser-adapter`](https://github.com/nrkn/css-select-browser-adapter/blob/master/index.js) 
+both of those. You may also want to look at -[`domutils`](https://github.com/fb55/domutils) to see the default
+-implementation, or at -[`css-select-browser-adapter`](https://github.com/nrkn/css-select-browser-adapter/blob/master/index.js)
 -for an implementation backed by the DOM.
 
 ```ts
@@ -150,7 +149,7 @@ both of those. You may also want to look at
   findAll: ( test:Predicate, nodes:[Node] ) => elems:[ElementNode],
 
   // finds the first node in the array that matches the test predicate, or one
-  // of its children 
+  // of its children
   findOne: ( test:Predicate, elems:[ElementNode] ) => findOne:ElementNode,
 
   /*
@@ -167,42 +166,42 @@ both of those. You may also want to look at
 
 _As defined by CSS 4 and / or jQuery._
 
-* Universal (`*`)
-* Tag (`<tagname>`)
-* Descendant (` `)
-* Child (`>`)
-* Parent (`<`) *
-* Sibling (`+`)
-* Adjacent (`~`)
-* Attribute (`[attr=foo]`), with supported comparisons:
-  * `[attr]` (existential)
-  * `=`
-  * `~=`
-  * `|=`
-  * `*=`
-  * `^=`
-  * `$=`
-  * `!=` *
-  * Also, `i` can be added after the comparison to make the comparison case-insensitive (eg. `[attr=foo i]`) *
-* Pseudos:
-  * `:not`
-  * `:contains` *
-  * `:icontains` * (case-insensitive version of `:contains`)
-  * `:has` *
-  * `:root`
-  * `:empty`
-  * `:parent` *
-  * `:[first|last]-child[-of-type]`
-  * `:only-of-type`, `:only-child`
-  * `:nth-[last-]child[-of-type]`
-  * `:link`, `:visited` (the latter doesn't match any elements)
-  * `:selected` *, `:checked`
-  * `:enabled`, `:disabled`
-  * `:required`, `:optional`
-  * `:header`, `:button`, `:input`, `:text`, `:checkbox`, `:file`, `:password`, `:reset`, `:radio` etc. *
-  * `:matches` *
+-   Universal (`*`)
+-   Tag (`<tagname>`)
+-   Descendant (``)
+-   Child (`>`)
+-   Parent (`<`) \*
+-   Sibling (`+`)
+-   Adjacent (`~`)
+-   Attribute (`[attr=foo]`), with supported comparisons:
+    -   `[attr]` (existential)
+    -   `=`
+    -   `~=`
+    -   `|=`
+    -   `*=`
+    -   `^=`
+    -   `$=`
+    -   `!=` \*
+    -   Also, `i` can be added after the comparison to make the comparison case-insensitive (eg. `[attr=foo i]`) \*
+-   Pseudos:
+    -   `:not`
+    -   `:contains` \*
+    -   `:icontains` \* (case-insensitive version of `:contains`)
+    -   `:has` \*
+    -   `:root`
+    -   `:empty`
+    -   `:parent` \*
+    -   `:[first|last]-child[-of-type]`
+    -   `:only-of-type`, `:only-child`
+    -   `:nth-[last-]child[-of-type]`
+    -   `:link`, `:visited` (the latter doesn't match any elements)
+    -   `:selected` \*, `:checked`
+    -   `:enabled`, `:disabled`
+    -   `:required`, `:optional`
+    -   `:header`, `:button`, `:input`, `:text`, `:checkbox`, `:file`, `:password`, `:reset`, `:radio` etc. \*
+    -   `:matches` \*
 
-__*__: Not part of CSS3
+**\***: Not part of CSS3
 
 ---
 
